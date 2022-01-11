@@ -232,6 +232,7 @@ class SimplePuzzleTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //根据不同的puzzle状态显示不同的标题
     return PuzzleTitle(
       title: status == PuzzleStatus.complete
           ? context.l10n.puzzleCompleted
@@ -315,7 +316,7 @@ class SimplePuzzleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
+//每一个tile都是一个text button
     return TextButton(
       style: TextButton.styleFrom(
         primary: PuzzleColors.white,
@@ -344,7 +345,11 @@ class SimplePuzzleTile extends StatelessWidget {
       onPressed: state.puzzleStatus == PuzzleStatus.incomplete
           ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
           : null,
-      child: Text(tile.value.toString()),
+      //里面放的是这个数字
+      // child: Text(tile.value.toString()),
+      child: Image.asset(
+        'assets/puzzles/rabbit/tiles/rabbitImage${tile.value}.png',
+      ),
     );
   }
 }

@@ -23,8 +23,11 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-
+//为什么要加入这部分
     Future<void>.delayed(const Duration(milliseconds: 20), () {
+      //在20秒之后,执行 把图片放入image cache里
+      //precache image 第一次加载的时候存好，下一次会更快得显示这张图片
+      //里面放的是imageProvider
       precacheImage(
         Image.asset('assets/images/shuffle_icon.png').image,
         context,
