@@ -191,6 +191,7 @@ class SimpleStartSection extends StatelessWidget {
         const PuzzleName(),
         const ResponsiveGap(large: 16),
         SimplePuzzleTitle(
+          //根据状态来显示内容
           status: state.puzzleStatus,
         ),
         const ResponsiveGap(
@@ -258,7 +259,8 @@ class SimplePuzzleBoard extends StatelessWidget {
     Key? key,
     required this.size,
     required this.tiles,
-    this.spacing = 8,
+    //间距
+    this.spacing = 0,
   }) : super(key: key);
 
   /// The size of the board.
@@ -317,38 +319,45 @@ class SimplePuzzleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 //每一个tile都是一个text button
-    return TextButton(
-      style: TextButton.styleFrom(
-        primary: PuzzleColors.white,
-        textStyle: PuzzleTextStyle.headline2.copyWith(
-          fontSize: tileFontSize,
+    return SizedBox(
+      height: 200,
+      width: 200,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          //去除边框
+          padding: EdgeInsets.all(0),
+          elevation: 0,
+          // primary: PuzzleColors.white,
+          // textStyle: PuzzleTextStyle.headline2.copyWith(
+          //   fontSize: tileFontSize,
+          // ),
+          // shape: const RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.all(
+          //     Radius.circular(12),
+          //   ),
+          // ),
+        ).copyWith(
+            // foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
+            // backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+            //   (states) {
+            //     if (tile.value == state.lastTappedTile?.value) {
+            //       return theme.pressedColor;
+            //     } else if (states.contains(MaterialState.hovered)) {
+            //       return theme.hoverColor;
+            //     } else {
+            //       return theme.defaultColor;
+            //     }
+            //   },
+            // ),
+            ),
+        onPressed: state.puzzleStatus == PuzzleStatus.incomplete
+            ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+            : null,
+        //里面放的是这个数字
+        // child: Text(tile.value.toString()),
+        child: Image.asset(
+          'assets/puzzles/rabbit/tiles/rabbitImage${tile.value}.png',
         ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-        ),
-      ).copyWith(
-        foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-          (states) {
-            if (tile.value == state.lastTappedTile?.value) {
-              return theme.pressedColor;
-            } else if (states.contains(MaterialState.hovered)) {
-              return theme.hoverColor;
-            } else {
-              return theme.defaultColor;
-            }
-          },
-        ),
-      ),
-      onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
-          : null,
-      //里面放的是这个数字
-      // child: Text(tile.value.toString()),
-      child: Image.asset(
-        'assets/puzzles/rabbit/tiles/rabbitImage${tile.value}.png',
       ),
     );
   }

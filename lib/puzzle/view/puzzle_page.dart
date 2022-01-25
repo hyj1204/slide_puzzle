@@ -186,7 +186,15 @@ class _PuzzleSections extends StatelessWidget {
       small: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleBoard(),
+          //要给puzzle Board 加入state
+
+          if (state.puzzleStatus == PuzzleStatus.complete)
+            Image.asset(
+              'assets/puzzles/rabbit/gif/rabbitGif.gif',
+            )
+          else
+            const PuzzleBoard(),
+
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
