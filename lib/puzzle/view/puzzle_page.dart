@@ -21,6 +21,7 @@ class PuzzlePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ThemeBloc(
         themes: const [
+          // PuzzleTheme(),
           SimpleTheme(),
         ],
       ),
@@ -189,8 +190,12 @@ class _PuzzleSections extends StatelessWidget {
           //要给puzzle Board 加入state
 
           if (state.puzzleStatus == PuzzleStatus.complete)
-            Image.asset(
-              'assets/puzzles/rabbit/gif/rabbitGif.gif',
+            SizedBox(
+              height: 400,
+              width: 400,
+              child: Image.asset(
+                'assets/puzzles/rabbit/gif/rabbitGif.gif',
+              ),
             )
           else
             const PuzzleBoard(),
